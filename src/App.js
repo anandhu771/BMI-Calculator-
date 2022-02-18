@@ -7,14 +7,33 @@ import Form from "./Components/Form";
 function App() {
   const [bmi, setBmi] = useState("00");
   const [bmiType, setBmiType] = useState("Chill Man We Got This");
+  const [bmiRange,setBmiRange] =useState({
+    underWeight: {low:""},
+    normal:{low:"",heigh:""},
+    overWeight: {low:"",heigh:""},
+    obesityOne:{low:"",heigh:""},
+    obesityTwo:{low:"",heigh:""},
+    obesityThree:{heigh:""},
+
+  })
   const onFormSub = (w,h) => {
     let b= calBmi(w,h)
     setBmi(b)
     
     setBmiType(overWeight(b))
     console.log(w, h);
+    const range ={
+      underWeight:{low:calWeight(18.5,h)},
+      normal:{low:calWeight(18.9,h),heigh:calWeight(24.9,h)},
+      overWeight:{low:calWeight(25,h),heigh:calWeight(29.9,h)},
+      obesityOne:{low:calWeight(30,h),heigh:calWeight(34.9,h)},
+      obesityTwo:{low:calWeight(35,h),heigh:calWeight(39.9,h)},
+      obesityThree:{heigh:calWeight(40,h)},
+    }
+    setBmiRange(range)
   }
   const calBmi= (w,h)=> (w/(h*h)).toFixed(2)
+  const calWeight =(b,h)=>(b*h*h).toFixed(2)
 
   const overWeight =(bmi)=>{
     if (bmi < 18.5){
@@ -48,7 +67,7 @@ function App() {
             <BmiScore bmiNo={bmi} bmiName={bmiType} />
           </div>
           <div className="col-12 col-sm-6">
-            <BmiList />
+            <BmiList range={bmiRange} bmi={bmi}/>
           </div>
         </div>
       </div>
