@@ -1,7 +1,7 @@
 import React from 'react'
 
 function BmiList({range,bmi}) {
-  console.log(range);
+  
   return (
    <div className="text-center shadow-sm rounded">
      <ul className="list-grroup">

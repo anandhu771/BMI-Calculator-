@@ -5,6 +5,7 @@ import BmiScore from "./Components/BmiScore";
 import Form from "./Components/Form";
 
 function App() {
+  const [changeWeight,setChangeWeight] =useState({weight:"",type:""})
   const [bmi, setBmi] = useState("00");
   const [bmiType, setBmiType] = useState("Chill Man We Got This");
   const [bmiRange,setBmiRange] =useState({
@@ -21,7 +22,7 @@ function App() {
     setBmi(b)
     
     setBmiType(overWeight(b))
-    console.log(w, h);
+    
     const range ={
       underWeight:{low:calWeight(18.5,h)},
       normal:{low:calWeight(18.9,h),heigh:calWeight(24.9,h)},
@@ -31,9 +32,36 @@ function App() {
       obesityThree:{heigh:calWeight(40,h)},
     }
     setBmiRange(range)
+    setChangeWeight(weigthChange(b,w,range))
   }
   const calBmi= (w,h)=> (w/(h*h)).toFixed(2)
+
   const calWeight =(b,h)=>(b*h*h).toFixed(2)
+
+  const weigthChange =(b,w,range)=>{
+    let weightChangeObj
+    if(b > 24.9){
+    weightChangeObj = {
+      weight: (w-range.normal.heigh).toFixed(2),
+      type: "positive"
+    }
+    return weightChangeObj
+    }else if(bmi < 18.5){
+      weightChangeObj = {
+        weight: (w-range.normal.low).toFixed(2),
+        type: "negative"
+      
+      }
+      return weightChangeObj
+    }else{
+      weightChangeObj ={
+        weight:0,
+        type:"normal"
+      }
+      return weightChangeObj
+    }
+
+  }
 
   const overWeight =(bmi)=>{
     if (bmi < 18.5){
@@ -64,7 +92,7 @@ function App() {
         </div>
         <div className="row justify-conntent-center mt-5 ">
           <div className="col-12 col-sm-6 mb-5">
-            <BmiScore bmiNo={bmi} bmiName={bmiType} />
+            <BmiScore bmiNo={bmi} bmiName={bmiType} changeWeight={changeWeight}/>
           </div>
           <div className="col-12 col-sm-6">
             <BmiList range={bmiRange} bmi={bmi}/>

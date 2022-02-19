@@ -14,6 +14,8 @@ function Form({getData}) {
     }else{
     getData(weight,height)
     setAlert(false)
+    setHeight("")
+    setWeight("")
     }
   }
   
