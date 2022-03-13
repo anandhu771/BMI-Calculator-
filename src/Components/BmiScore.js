@@ -1,6 +1,9 @@
 import React from "react";
 
 function BmiScore({ bmiNo, bmiName, changeWeight }) {
+
+
+
   return (
     <div className="text-center shadow rounded p-4">
       <div>Your BMI</div>
